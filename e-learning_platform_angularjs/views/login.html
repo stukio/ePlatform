@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2>Login</h2>
+        <form role="form" ng-submit="loginUser(user_email, user_password, remember)">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="user@example.com" ng-model="user_email" required autofocus>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="******" ng-model="user_password" required>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+        <a ui-sref="forgot_password" style="cursor: pointer;">Forgot your password?</a>
+        <br>
+        <br>
+        <!-- success/error messages -->
+        <div id="login_alert" ng-class="login_status" role="alert">
+            <a href="#" class="alert-link">{{ login_message }}</a>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>

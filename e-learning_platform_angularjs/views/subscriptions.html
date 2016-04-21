@@ -1,0 +1,87 @@
+<div class="row" style="text-align: center;">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="text-align: center; margin: auto">
+        <h2>Manage Subscriptions</h2>
+        <table class="table">
+            <tr>
+                <td>
+                    <h3>Basic Plan</h3>
+                </td>
+                <td style="padding: 20px;"></td>
+                <td>
+                    <h3>Pro Plan</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="lead">$0/month, upgrade any time</p>
+                </td>
+                <td style="padding: 20px;"></td>
+                <td>
+                    <p class="lead">${{ subscription_price }}/month, cancel any time</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="subscription_basic" type="radio" ng-model="subscription_type" value="basic">
+                </td>
+                <td style="padding: 20px;"></td>
+                <td>
+                    <input id="subscription_pro" type="radio" ng-model="subscription_type" value="pro">
+                </td>
+            </tr>
+        </table>
+        <!-- Upgrade -->
+        <div ng-show="subscription_type == 'pro' && current_user.subscribed != 'pro'">
+            <h1>Enter card data</h1>
+            <br>
+            <form name="stripe_form" id="stripe_form" ng-submit="createSubscription(number, cvc, exp_month, exp_year)">
+                <div class="form-row">
+                    <label>
+                        Card Number
+                        <input type="text" class="form-control" size="20" data-stripe="number" ng-model="number">
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        CVC
+                        <input type="text" class="form-control" size="4" data-stripe="cvc" ng-model="cvc">
+                    </label>
+                </div>
+                <div class="form-row">
+                    <label>
+                        Expiration (MM/YYYY)
+                        <br>
+                        <input style="display:inline; width: 50px" type="text" class="form-control" size="2" data-stripe="exp-month" ng-model="exp_month"> /
+                        <input style="display:inline; width: 70px" type="text" class="form-control" size="4" data-stripe="exp-year" ng-model="exp_year">
+                    </label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" ng-disabled="stripe_form.$submitted">Upgrade to Pro</button>
+            </form>
+        </div>
+        <!-- Downgrade -->
+        <div ng-show="subscription_type != 'pro' && current_user.subscribed == 'pro'">
+            <h1>Want to go back to the basic plan?</h1>
+            <br>
+            <button type="submit" class="btn btn-default btn-lg" ng-click="deleteSubscription()">Yes, I want to cancel my pro subscription</button>
+        </div>
+        <br>
+        <br>
+        <!-- success/error messages -->
+        <div id="updateSubscription_alert" ng-class="updateSubscription_status" role="alert">
+            <a href="#" class="alert-link">{{ updateSubscription_response }}</a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<div style="text-align: center; margin-bottom: 50px">
+    <div class="container">
+        <h1 ng-show="current_user.subscribed == 'pro' && subscription_type == 'pro'">You're now a 'pro' user. Thank you for being awesome :)</h1>
+        <div ng-show="current_user.subscribed != 'pro' && subscription_type != 'pro'">
+            <h1>Want to level up?</h1>
+            <br>
+            <button type="submit" class="btn btn-danger btn-lg" ng-click="subscription_type = 'pro'">Yes, I want to go pro</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="row" style="text-align: center;">
+    <!-- Shool Stats -->
+    <div class="col-md-6">
+        <h2 style="text-align: center;">Subscriptions</h2>
+        <p class="lead">
+            <strong>{{ total_users }}</strong> registered users
+            <br><strong>{{ total_subscriptions }}</strong> pro subscriptions
+            <br><strong>${{ total_subscriptions * subscription_price }}</strong> revenue this month
+        </p>
+    </div>
+    <!-- Create new Course -->
+    <div class="col-md-6" style="margin-top: 80px">
+        <button type="button" data-toggle="modal" data-target="#create_course_modal" class="btn btn-lg btn-danger">Create a Course</button>
+    </div>
+</div>
+<div class="row">
+    <!-- Shool Info -->
+    <div class="col-md-6">
+        <h2 style="text-align: center;">School Info</h2>
+        <form name="school_data_form" role="form" ng-submit="updateSchoolData(school.name, school.thumbnail.url)" style="margin: auto; width: 50%">
+            <div class="form-group">
+                <label for="school_name">School name</label>
+                <input id="school_name" type="text" class="form-control" placeholder="{{ school.name }}" ng-model="school.name">
+            </div>
+            <div class="form-group">
+                <label for="school_thumb">School thumbnail</label>
+                <div id="school_thumb">
+                    <img ngf-thumbnail="school.thumbnail.url" class="avatar">
+                </div>
+                <br>
+                <button type="button" ngf-select ng-model="school.thumbnail.url" accept="image/*" class="btn btn-default btn-sm">Select new image</button>
+            </div>
+            <button ng-disabled="!school_data_form.$valid" class="btn btn-danger btn-lg" type="submit">Update data</button>
+            <br><br>
+            <!-- success/error messages -->
+            <div id="updateSchoolData_alert" ng-class="updateSchoolData_status" role="alert">
+                <a href="#" class="alert-link">{{ updateSchoolData_message }}</a>
+            </div>
+        </form>
+    </div>
+    <!-- Published courses -->
+    <div class="col-md-6" style="text-align: center;">
+        <h2>Published courses</h2>
+        <br><br>
+        <table style="margin: auto; width: 95%" class="table">
+            <thead>
+                <th style="text-align: center;">Created on</th>
+                <th style="text-align: center;">Course name</th>
+                <th style="text-align: center;">Course description</th>
+                <th style="text-align: center;">Add/Edit Chapters</th>
+                <th style="text-align: center;" colspan="2">Course Options</th>
+            </thead>
+            <tr style="height: 50px" ng-repeat="course in courses | orderBy: 'created_at'">
+                <td>{{ course.created_at | date: 'MMM d, y' }}</td>
+                <td>{{ course.name }}</td>
+                <td>{{ course.description }}</td>
+                <td>
+                    <button type="button" ng-click="editChapters(course)" class="btn btn-sm btn-danger" data-toggle="modal" data-target="{{ edit_chapters_modal }}">Chapters</button>
+                </td>
+                <td>
+                    <button type="button" ng-click="editCourse(course)" class="btn btn-sm btn-primary" data-toggle="modal" data-target="{{ edit_course_modal }}">Edit</button>
+                </td>
+                <td>
+                    <button type="button" ng-click="deleteCourse(course.id)" class="btn btn-sm btn-default">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div ng-include="'./views/create_course_modal.html'"></div>
+<div ng-include="'./views/edit_course_modal.html'"></div>
+<div ng-include="'./views/edit_chapters_modal.html'"></div>
+

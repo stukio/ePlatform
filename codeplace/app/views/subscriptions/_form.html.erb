@@ -1,0 +1,14 @@
+	<%= form_tag subscriptions_path, method: :post do %>
+
+
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-image="https://s3-us-west-2.amazonaws.com/codeplaceimages/codeplace_thumb.jpg"
+          data-description="Pro Subscription $30"
+          data-panel-label="Subscribe"
+  		  data-label="Subscribe"
+  		  data-email="<%= @email %>"
+          data-allow-remember-me="false">
+</script>
+<span> $30 per month, cancel at any time.</span>
+<% end %> 

@@ -1,0 +1,42 @@
+<div class="modal fade" id="edit_course_modal" tabindex="-1">
+    <!-- course modal -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit '{{ course_to_edit.name }}'</h4>
+            </div>
+            <div class="modal-body">
+                <form name="edit_course_form" role="form" ng-submit="updateCourse(course_to_edit.id, course_to_edit.name, course_to_edit.description, course_to_edit.thumbnail.url)">
+                    <div class="form-group">
+                        <label for="course_name">Edit course name</label>
+                        <input id="course_name" type="text" class="form-control" placeholder="{{ course_to_edit.name || 'Photoshop for beginners'}}" ng-model="course_to_edit.name" value="{{ course_to_edit.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course_description">Edit course description</label>
+                        <input id="course_description" type="textarea" class="form-control" placeholder="{{ course_to_edit.description || 'In this course, we\'re going to learn how to use photoshop.' }}" ng-model="course_to_edit.description" value="{{ course_to_edit.description }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_course_thumb">Edit course thumbnail</label>
+                        <div id="course_thumb">
+                            <img ngf-thumbnail="course_to_edit.thumbnail.url" class="avatar">
+                        </div>
+                        <br>
+                        <button type="button" ngf-select ng-model="course_thumbnail" accept="image/*" class="btn btn-default btn-sm">Select new thumbnail</button>
+                    </div>
+                    <button type="submit" ng-disabled="edit_course_form.$invalid" class="btn btn-danger">Save course info</button>
+                    <br>
+                    <br>
+                </form>
+                <br>
+                <!-- success/error messages -->
+                <div id="updateCourse_alert" ng-class="updateCourse_status" role="alert">
+                    <a href="#" class="alert-link">{{ updateCourse_message }}</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+    <div ng-repeat="c in courses">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <h2 ui-sref="course({courseId: c.id})" style="cursor: pointer;">{{ c.name }}</h2>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <img ui-sref="course({courseId: c.id})" style="cursor: pointer;" ng-src="{{ c.thumbnail.url }}" alt="{{ c.name }}" width="100%">
+            </div>
+            <div class="col-md-3">
+                <p ui-sref="course({courseId: c.id})" style="cursor: pointer;" class="lead">{{ c.description }}</p>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div>

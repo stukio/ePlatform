@@ -1,0 +1,66 @@
+<div class="modal fade" id="edit_chapters_modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add/Edit Chapters</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Add new Chapter</h4>
+                <br>
+                <form name="create_chapters_form" ng-submit="createChapter(course_to_edit.id, new_chapter_name, new_chapter_description, new_chapter_video)">
+                    <div class="form-group">
+                        <label for="chapter_name">Chapter name</label>
+                        <input id="chapter_name" type="text" class="form-control" placeholder="Setup" ng-model="new_chapter_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="chapter_description">Chapter description</label>
+                        <input id="chapter_description" type="textarea" class="form-control" placeholder="In this chapter, we're going to see how we can setup our work environment." ng-model="new_chapter_description">
+                    </div>
+                    <div class="form-group">
+                        <label for="school_name">Chapter video</label>
+                        <input id="chapter_description" type="text" class="form-control" placeholder="https://www.youtube.com/watch?v=q7o7R5BgWDY" ng-model="new_chapter_video">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Add chapter</button>
+                </form>
+                <br>
+                <!-- success/error messages -->
+                <div id="createChapter_alert" ng-class="createChapter_status" role="alert">
+                    <a href="#" class="alert-link">{{ createChapter_message }}</a>
+                </div>
+                <div ng-show="course_to_edit.chapters.length > 0">
+                    <h4>Edit Chapter</h4>
+                    <br>
+                    <form name="edit_chapters_form" ng-repeat="chapter in course_to_edit.chapters" ng-submit="updateChapter(course_to_edit.id, chapter.id, chapter.name, chapter.description, chapter.video_url)">
+                        <div class="form-group">
+                            <label for="chapter_name">Chapter name</label>
+                            <input id="chapter_name" type="text" class="form-control" placeholder="{{ chapter.name || 'Setup' }}" value="{{ chapter.name }}"  ng-model="chapter.name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="chapter_description">Chapter description</label>
+                            <input id="chapter_description" type="textarea" class="form-control" placeholder="{{ chapter.description || 'In this chapter, we\'re going to see how we can setup our work environment.' }}" value="{{ chapter.description }}" ng-model="chapter.description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="chapter_video">Chapter video</label>
+                            <input id="chapter_video" type="text" class="form-control" placeholder="{{ chapter.video_url || 'https://www.youtube.com/watch?v=q7o7R5BgWDY' }}" value="{{ chapter.video_url }}" ng-model="chapter.video_url" required>
+                        </div>
+                        <button type="submit" ng-disabled="edit_chapters_form.$invalid" class="btn btn-primary">Save chapter</button>
+                        <button type="button" ng-click="deleteChapter(course_to_edit.id, chapter.id)" class="btn btn-danger">Delete chapter</button>
+                        <br><br>
+                    </form>
+                    <!-- success/error messages -->
+                    <div id="updateChapter_alert" ng-class="updateChapterData_status" role="alert">
+                        <a href="#" class="alert-link">{{ updateChapterData_message }}</a>
+                    </div>
+                    <!-- success/error messages -->
+                    <div id="deleteChapter_alert" ng-class="deleteChapter_status" role="alert">
+                        <a href="#" class="alert-link">{{ deleteChapter_message }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
